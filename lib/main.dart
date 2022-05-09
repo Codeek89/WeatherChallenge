@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_challenge/bloc/search_bloc.dart';
 import 'package:weather_challenge/bloc/weather_bloc.dart';
+import 'package:weather_challenge/domain/domain.dart';
 import 'package:weather_challenge/ui/pages/search_page.dart';
 import 'package:weather_challenge/util/strings.dart';
 
@@ -24,10 +25,14 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => WeatherBloc(),
+          create: (context) => WeatherBloc(
+            baseDomain: Domain(),
+          ),
         ),
         BlocProvider(
-          create: (context) => SearchBloc(),
+          create: (context) => SearchBloc(
+            baseDomain: Domain(),
+          ),
         )
       ],
       child: MaterialApp(

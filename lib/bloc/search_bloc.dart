@@ -6,12 +6,15 @@ import 'package:weather_challenge/repository/api_exception.dart';
 import 'events/search_events.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchStates> {
-  final Domain domain = Domain();
+  final BaseDomain baseDomain;
 
-  SearchBloc() : super(InitialSearchState()) {
+  SearchBloc({
+    required this.baseDomain,
+  }) : super(InitialSearchState()) {
     // Event used to retrieve a list of cities when searching
     on<SearchCityEvent>(
       ((event, emit) async {
+        final domain = baseDomain as Domain;
         try {
           await domain.getSuggestedCities(event.name).whenComplete(
             () {

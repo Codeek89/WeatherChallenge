@@ -1,7 +1,7 @@
-import 'package:flutter_test/flutter_test.dart';
+// import 'package:flutter_test/flutter_test.dart';
 
-void main() {
-  test('test current weather', () {});
+// void main() {
+//   test('test current weather', () {});
 
-  test('test one call API', () {});
-}
+//   test('test one call API', () {});
+// }

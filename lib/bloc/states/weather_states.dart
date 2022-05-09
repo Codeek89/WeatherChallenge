@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:weather_challenge/domain/models/city_model.dart';
 
 /// States that may occur:
@@ -6,7 +7,10 @@ import 'package:weather_challenge/domain/models/city_model.dart';
 /// 3. Error while fetching data;
 /// 4. Error because of lack of connectivity;
 
-class WeatherStates {}
+class WeatherStates extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 class InitialWeatherState extends WeatherStates {}
 

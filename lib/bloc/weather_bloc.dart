@@ -38,6 +38,11 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherStates> {
         );
       } catch (e) {
         print("WeatherBLoC: ${e.toString()}");
+        emit(
+          ErrorState(
+            message: e.toString(),
+          ),
+        );
       }
     });
   }

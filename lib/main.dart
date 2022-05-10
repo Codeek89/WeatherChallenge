@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_challenge/bloc/search_bloc.dart';
 import 'package:weather_challenge/bloc/weather_bloc.dart';
+import 'package:weather_challenge/domain/domain.dart';
 import 'package:weather_challenge/ui/pages/search_page.dart';
 import 'package:weather_challenge/util/strings.dart';
+import 'package:weather_challenge/util/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +16,31 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(const MyApp());
+  runApp(
+    MultiBlocProvider(
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<ThemeNotifier>(
+            create: (_) => ThemeNotifier(),
+            lazy: false,
+          ),
+        ],
+        child: const MyApp(),
+      ),
+      providers: [
+        BlocProvider(
+          create: (context) => WeatherBloc(
+            baseDomain: Domain(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => SearchBloc(
+            baseDomain: Domain(),
+          ),
+        )
+      ],
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -21,53 +48,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => WeatherBloc(),
-        ),
-        BlocProvider(
-          create: (context) => SearchBloc(),
-        )
-      ],
-      child: MaterialApp(
+    return Consumer<ThemeNotifier>(builder: (context, theme, _) {
+      return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: WeatherStrings.titleName,
-        theme: ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: Colors.redAccent,
-          textTheme: const TextTheme(
-            headline1: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-            headline3: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w600,
-            ),
-            bodyText1: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
-            bodyText2: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              primary: Colors.red,
-              textStyle: const TextStyle(
-                fontSize: 18,
-                color: Colors.black,
-              ),
-              elevation: 5,
-              padding: const EdgeInsets.all(8.0),
-            ),
-          ),
-        ),
+        theme: theme.currentTheme,
+        themeMode: theme.isDarkMode ? ThemeMode.dark : ThemeMode.light,
         home: const SearchPage(),
-      ),
-    );
+      );
+    });
   }
 }

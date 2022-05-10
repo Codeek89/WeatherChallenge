@@ -41,11 +41,14 @@ dependencies:
   geocoding: ^2.0.4
   equatable: ^2.0.3
   weather_icons: ^3.0.0
+  mockito: ^5.1.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   bloc_test: ^9.0.3
+  build_runner: ^2.1.10
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

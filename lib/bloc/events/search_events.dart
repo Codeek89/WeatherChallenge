@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:weather_challenge/domain/models/city_model.dart';
 
 class SearchEvent extends Equatable {
   @override

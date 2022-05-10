@@ -9,7 +9,7 @@ import 'package:weather_challenge/domain/models/city_model.dart';
 
 abstract class SearchStates extends Equatable {
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }
 
 class InitialSearchState extends SearchStates {}
@@ -31,5 +31,7 @@ class ErrorState extends SearchStates {
   final String message;
 
   ErrorState({required this.message});
+
+  @override
   List<Object?> get props => [message];
 }

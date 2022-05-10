@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_challenge/bloc/events/search_events.dart';
 import 'package:weather_challenge/bloc/events/weather_events.dart';
 import 'package:weather_challenge/bloc/search_bloc.dart';
 import 'package:weather_challenge/bloc/states/search_states.dart'
-    as searchState;
-import 'package:weather_challenge/bloc/states/weather_states.dart'
-    as weatherState;
+    as search_state;
 import 'package:weather_challenge/bloc/weather_bloc.dart';
 import 'package:weather_challenge/domain/models/city_model.dart';
 import 'package:weather_challenge/ui/pages/weather_page.dart';
 import 'package:weather_challenge/ui/widgets/search_bar.dart';
+import 'package:weather_challenge/util/dimensions.dart';
+import 'package:weather_challenge/util/keys.dart';
+import 'package:weather_challenge/util/strings.dart';
 
+/// This page will search locations and give
+/// clickable results in order to be then
+/// shown in the next page.
+///
+/// Here you can enter a name of a city
+/// and get a list of cities corresponding
+/// to the searched one. You have cards with
+/// name, country, eventually streets or other
+/// info.
 class ActiveSearchPage extends StatefulWidget {
   const ActiveSearchPage({Key? key}) : super(key: key);
 
@@ -26,30 +37,42 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 60),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.kPaddingFromDeviceHorizontal,
+          vertical: Dimensions.kPaddingFromDeviceVertical,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Hero(
-              tag: 'search',
+              tag: WeatherStrings.tagSearch,
               child: Material(
                 child: CustomSearchBar(
+                  key: const Key(
+                    TestingKeys.searchBar,
+                  ),
                   controller: textController,
                 ),
               ),
             ),
-            BlocBuilder<SearchBloc, searchState.SearchStates>(
+            BlocBuilder<SearchBloc, search_state.SearchStates>(
               builder: ((context, state) {
-                if (state is searchState.SuggestionsFound) {
+                if (state is search_state.SuggestionsFound) {
                   final allCities = state.allCitiesSuggestions;
                   return ListView.builder(
+                      key: const Key(TestingKeys.listSuggestions),
                       shrinkWrap: true,
+                      padding: const EdgeInsets.only(
+                        top: Dimensions.kBigPadding,
+                      ),
                       itemCount: state.allCitiesSuggestions.length,
                       itemBuilder: (context, index) {
                         return Card(
                           child: ListTile(
-                            leading: const Icon(Icons.location_city),
+                            leading: const Icon(
+                              Icons.location_city,
+                            ),
                             title: Text(
                               allCities[index]!.name,
                             ),
@@ -64,6 +87,7 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
                                     lat: allCities[index]!.lat,
                                     lon: allCities[index]!.lon,
                                   )));
+                              context.read<SearchBloc>().add(ResetBloc());
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -74,17 +98,19 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
                           ),
                         );
                       });
-                } else if (state is searchState.SuggestionsNotFound) {
+                } else if (state is search_state.SuggestionsNotFound) {
                   return const Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(
+                      Dimensions.kMiniPadding,
+                    ),
                     child: Text(
-                      "No location found. Try again please...",
+                      WeatherStrings.noLocationFound,
                     ),
                   );
-                } else if (state is searchState.ErrorState) {
-                  return const Center(
+                } else if (state is search_state.ErrorState) {
+                  return Center(
                     child: Text(
-                      "No internet connection available. Try connecting to the network...",
+                      state.message,
                     ),
                   );
                 } else {

@@ -4,8 +4,17 @@ import 'package:intl/intl.dart';
 import 'package:weather_challenge/bloc/states/weather_states.dart';
 import 'package:weather_challenge/bloc/weather_bloc.dart';
 import 'package:weather_challenge/ui/widgets/weather_box.dart';
+import 'package:weather_challenge/util/dimensions.dart';
 import 'package:weather_challenge/util/resources_manager.dart';
 
+/// This widget will render everything
+/// weather-related to the city clicked in the previous page.
+///
+/// Temperature, humidity, wind speed.
+///
+/// This page will provide info for the current weather
+/// and for the next 5 days. You can click on each listTile
+/// and get an overview of the forecast of that specific day.
 class WeatherPage extends StatelessWidget {
   final int daysToShow = 5;
 
@@ -14,95 +23,95 @@ class WeatherPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 50.0,
-        ),
-        child:
-            BlocBuilder<WeatherBloc, WeatherStates>(builder: (context, state) {
-          if (state is CityFound) {
-            final allFiveDays = state.fiveDaysForecastList!;
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: WeatherBox(
-                    model: state.currentForecastCityModel!,
+      body: LayoutBuilder(builder: (context, constraints) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.kMediumPadding,
+            vertical: Dimensions.kPaddingFromDeviceVertical,
+          ),
+          child: BlocBuilder<WeatherBloc, WeatherStates>(
+              builder: (context, state) {
+            if (state is CityFound) {
+              final allFiveDays = state.fiveDaysForecastList!;
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: WeatherBox(
+                      model: state.currentForecastCityModel!,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 12.0,
-                ),
-                const Divider(
-                  color: Colors.white,
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: daysToShow,
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Dialog(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    16.0,
-                                  ),
-                                ),
-                                elevation: 16,
-                                child: SizedBox(
-                                  height: 350,
-                                  width: 500,
-                                  child: WeatherBox(
-                                    model: allFiveDays[index]!,
-                                    showName: false,
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        child: ListTile(
-                          leading: ResourceManager.getIconFromDescription(
-                            allFiveDays[index]!,
-                          ),
-                          title: Text(
-                            "${DateFormat('EEEE').format(
-                              allFiveDays[index]!.time!,
-                            )} - ${allFiveDays[index]!.time!.day} ${DateFormat.MMMM().format(allFiveDays[index]!.time!)}",
-                          ),
-                          subtitle: Text(
-                            allFiveDays[index]!.littleDescription,
-                          ),
-                          trailing: Text(
-                            "${allFiveDays[index]!.temp.toStringAsFixed(1)} °C",
-                          ),
-                        ),
-                      );
-                    },
+                  SizedBox(
+                    height: constraints.maxHeight * 0.02,
                   ),
-                ),
-              ],
-            );
-          } else if (state is ErrorState) {
-            return Text(
-              state.message,
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        }),
-      ),
+                  const Divider(),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: daysToShow,
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      Dimensions.circularBorder,
+                                    ),
+                                  ),
+                                  elevation: Dimensions.dialogElevation,
+                                  child: SizedBox(
+                                    height: constraints.maxHeight * 0.45,
+                                    width: constraints.maxWidth,
+                                    child: WeatherBox(
+                                      model: allFiveDays[index]!,
+                                      showName: false,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: ListTile(
+                            leading: ResourceManager.getIconFromDescription(
+                              allFiveDays[index]!,
+                            ),
+                            title: Text(
+                              "${DateFormat('EEEE').format(
+                                allFiveDays[index]!.time!,
+                              )} - ${allFiveDays[index]!.time!.day} ${DateFormat.MMMM().format(allFiveDays[index]!.time!)}",
+                            ),
+                            subtitle: Text(
+                              allFiveDays[index]!.littleDescription,
+                            ),
+                            trailing: Text(
+                              "${allFiveDays[index]!.temp.toStringAsFixed(1)} °C",
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
+            } else if (state is ErrorState) {
+              return Text(
+                state.message,
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
+        );
+      }),
     );
   }
 }

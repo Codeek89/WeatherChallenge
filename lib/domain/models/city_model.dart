@@ -1,5 +1,7 @@
 import 'package:geocoding/geocoding.dart';
 
+/// Base class for city data model.
+/// It owns basically data related to the location.
 class CityModel {
   final String name;
   double? lat;
@@ -27,6 +29,7 @@ class CityModel {
   }
 }
 
+/// A city model that owns also data about weather.
 class WeatherCityModel extends CityModel {
   final double temp;
   final double humidity;
@@ -44,7 +47,11 @@ class WeatherCityModel extends CityModel {
     required this.windSpeed,
     required this.littleDescription,
     this.time,
-  }) : super(name: name, country: country, lat: lat, lon: lon);
+  }) : super(
+            name: name,
+            country: country,
+            lat: lat.toDouble(),
+            lon: lon.toDouble());
 
   factory WeatherCityModel.fromCurrentWeatherJson(Map<String, dynamic> json) {
     return WeatherCityModel(
@@ -55,7 +62,7 @@ class WeatherCityModel extends CityModel {
       temp: json['main']['temp'].toDouble(),
       humidity: json['main']['humidity'].toDouble(),
       windSpeed: json['wind']['speed'].toDouble(),
-      littleDescription: json['weather'][0]['description'],
+      littleDescription: json['weather'][0]['description'] ?? '',
       time: DateTime.now(),
     );
   }
@@ -78,4 +85,18 @@ class WeatherCityModel extends CityModel {
           json['daily'][index]['dt'] * 1000),
     );
   }
+
+  @override
+  bool operator ==(covariant WeatherCityModel other) {
+    return name == other.name &&
+        country == other.country &&
+        temp == other.temp &&
+        humidity == other.humidity &&
+        windSpeed == other.windSpeed &&
+        lat == other.lat &&
+        lon == other.lon;
+  }
+
+  @override
+  int get hashCode => super.hashCode;
 }

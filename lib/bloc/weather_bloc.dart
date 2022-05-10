@@ -4,41 +4,21 @@ import 'package:weather_challenge/bloc/states/weather_states.dart';
 import 'package:weather_challenge/domain/domain.dart';
 import 'package:weather_challenge/repository/api_exception.dart';
 
+/// BLoC that handles searching operations.
+/// Possible states:
+/// 1. InitialWeatherState;
+/// 2. CityFound, here we have a list of locations to be selected;
+/// 3. CityNotFound, we have a list with null elements, so no city found;
+/// 4. ErrorState, when something is wrong, we generally use this as a life-saver;
 class WeatherBloc extends Bloc<WeatherEvent, WeatherStates> {
-  Domain domain = Domain();
+  final BaseDomain baseDomain;
 
-  WeatherBloc() : super(InitialWeatherState()) {
-    // Event used to retrieve a list of cities when searching
-    // on<GetListCities>(
-    //   ((event, emit) async {
-    //     try {
-    //       await domain.getSuggestedCities(event.name).whenComplete(
-    //         () {
-    //           if (domain.suggestedCities == null) {
-    //             emit(CityNotFound());
-    //           }
-    //           final citySuggestions = GetListSuggestions(
-    //             allCitiesSuggestions: domain.suggestedCities!,
-    //           );
-    //           emit(citySuggestions);
-    //         },
-    //       );
-    //     } on FetchDataException {
-    //       emit(
-    //         NoInternetConnection(
-    //           message: "No Internet connection",
-    //         ),
-    //       );
-    //     } on NoLocationFoundException {
-    //       emit(CityNotFound());
-    //     } catch (e) {
-    //       print("WeatherBloc: ${e.toString()}");
-    //     }
-    //   }),
-    // );
-
+  WeatherBloc({
+    required this.baseDomain,
+  }) : super(InitialWeatherState()) {
     // Event userd to retrieve city info on current weather and forecast
     on<EnterCity>((event, emit) async {
+      final domain = baseDomain as Domain;
       try {
         WeatherStates state;
         await domain.getWeatherOfCity(event.model).whenComplete(() async {
@@ -56,14 +36,18 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherStates> {
         });
       } on NoLocationFoundException {
         emit(CityNotFound());
-      } on FetchDataException {
+      } on FetchDataException catch (e) {
         emit(
           ErrorState(
-            message: "No Internet Connection",
+            message: e.toString(),
           ),
         );
       } catch (e) {
-        print("WeatherBLoC: ${e.toString()}");
+        emit(
+          ErrorState(
+            message: e.toString(),
+          ),
+        );
       }
     });
   }

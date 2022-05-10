@@ -5,25 +5,35 @@ import 'package:weather_challenge/repository/api_exception.dart';
 
 import 'events/search_events.dart';
 
+/// BLoC that handles searching operations.
+/// Possible states:
+/// 1. InitialSearchState;
+/// 2. SuggestionsFound, here we have a list of locations to be selected;
+/// 3. SuggestionsNotFound, we have a list with null elements, so no city found;
+/// 4. ErrorState, when something is wrong, we generally use this as a saver;
 class SearchBloc extends Bloc<SearchEvent, SearchStates> {
-  final Domain domain = Domain();
+  final BaseDomain baseDomain;
 
-  SearchBloc() : super(InitialSearchState()) {
+  SearchBloc({
+    required this.baseDomain,
+  }) : super(InitialSearchState()) {
     // Event used to retrieve a list of cities when searching
     on<SearchCityEvent>(
       ((event, emit) async {
         try {
-          await domain.getSuggestedCities(event.name).whenComplete(
-            () {
-              if (domain.suggestedCities?.first == null) {
-                emit(SuggestionsNotFound());
-              }
-              final citySuggestions = SuggestionsFound(
-                allCitiesSuggestions: domain.suggestedCities!,
-              );
-              emit(citySuggestions);
-            },
-          );
+          if (baseDomain is Domain) {
+            await baseDomain.getSuggestedCities(event.name).whenComplete(
+              () {
+                if (baseDomain.suggestedCities?.first == null) {
+                  emit(SuggestionsNotFound());
+                }
+                final citySuggestions = SuggestionsFound(
+                  allCitiesSuggestions: baseDomain.suggestedCities!,
+                );
+                emit(citySuggestions);
+              },
+            );
+          }
         } on FetchDataException {
           emit(
             ErrorState(
@@ -33,7 +43,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchStates> {
         } on NoLocationFoundException {
           emit(SuggestionsNotFound());
         } catch (e) {
-          print("SearchBloc: ${e.toString()}");
+          emit(
+            ErrorState(
+              message: e.toString(),
+            ),
+          );
         }
       }),
     );

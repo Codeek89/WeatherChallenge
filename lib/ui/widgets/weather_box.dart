@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_challenge/domain/models/city_model.dart';
+import 'package:weather_challenge/util/dimensions.dart';
 import 'package:weather_challenge/util/resources_manager.dart';
+import 'package:weather_challenge/util/strings.dart';
 import 'package:weather_icons/weather_icons.dart';
 
+/// Widget used to give an overview of the current weather or forecast.
 class WeatherBox extends StatelessWidget {
   final WeatherCityModel model;
   final bool showName;
@@ -19,7 +22,7 @@ class WeatherBox extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Opacity(
-          opacity: 0.4,
+          opacity: 0.3,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16.0),
             child: Image.network(
@@ -32,7 +35,7 @@ class WeatherBox extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(
-            top: 16.0,
+            top: Dimensions.kSmallPadding,
           ),
           child: Align(
             alignment: Alignment.topCenter,
@@ -47,7 +50,7 @@ class WeatherBox extends StatelessWidget {
                       ),
                       Text(
                         model.time!.day == DateTime.now().day
-                            ? "Today"
+                            ? WeatherStrings.today
                             : "${model.time!.day} ${DateFormat.MMMM().format(model.time!)}",
                         style: Theme.of(context).textTheme.bodyText2,
                       )
@@ -55,7 +58,7 @@ class WeatherBox extends StatelessWidget {
                   : [
                       Text(
                         model.time!.day == DateTime.now().day
-                            ? "Today"
+                            ? WeatherStrings.today
                             : "${model.time!.day} ${DateFormat.MMMM().format(model.time!)}",
                         style: Theme.of(context).textTheme.headline3,
                       ),
@@ -66,16 +69,18 @@ class WeatherBox extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(
+              Dimensions.kMiniPadding,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ResourceManager.getIconFromDescription(
                   model,
-                  size: 64.0,
+                  size: Dimensions.currentWeatherIcon,
                 ),
-                const SizedBox(
-                  height: 24.0,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.025,
                 ),
                 Text(
                   model.littleDescription,
@@ -86,7 +91,7 @@ class WeatherBox extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 6.0,
+            vertical: Dimensions.kMiniPadding,
           ),
           child: Align(
             alignment: Alignment.bottomCenter,
@@ -97,29 +102,29 @@ class WeatherBox extends StatelessWidget {
                 WeatherValueBox(
                   property: const Icon(
                     WeatherIcons.windy,
-                    size: 24.0,
+                    size: Dimensions.weatherIcon,
                     color: Colors.lightBlue,
                   ),
                   value: model.windSpeed.toStringAsFixed(2),
-                  unit: "km/h",
+                  unit: WeatherStrings.windUnit,
                 ),
                 WeatherValueBox(
                   property: const Icon(
                     WeatherIcons.thermometer,
-                    size: 24.0,
+                    size: Dimensions.weatherIcon,
                     color: Colors.red,
                   ),
                   value: model.temp.toStringAsFixed(1),
-                  unit: "°C",
+                  unit: WeatherStrings.tempUnit,
                 ),
                 WeatherValueBox(
                   property: const Icon(
                     WeatherIcons.humidity,
-                    size: 24.0,
+                    size: Dimensions.weatherIcon,
                     color: Colors.orange,
                   ),
                   value: model.humidity.round().toString(),
-                  unit: "%",
+                  unit: WeatherStrings.humidityUnit,
                 ),
               ],
             ),
@@ -144,11 +149,11 @@ class WeatherValueBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
+      elevation: Dimensions.cardElevation,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 6.0,
+          horizontal: Dimensions.kSmallPadding,
+          vertical: Dimensions.kMicroPadding,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -156,8 +161,8 @@ class WeatherValueBox extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             property,
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.01,
             ),
             Text(
               value,
@@ -170,10 +175,6 @@ class WeatherValueBox extends StatelessWidget {
                 fontWeight: FontWeight.w300,
               ),
             )
-            // Text(
-            //   "$value$unit",
-            //   style: Theme.of(context).textTheme.bodyText1,
-            // ),
           ],
         ),
       ),

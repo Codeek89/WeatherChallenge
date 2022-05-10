@@ -4,6 +4,12 @@ import 'package:weather_challenge/bloc/states/weather_states.dart';
 import 'package:weather_challenge/domain/domain.dart';
 import 'package:weather_challenge/repository/api_exception.dart';
 
+/// BLoC that handles searching operations.
+/// Possible states:
+/// 1. InitialWeatherState;
+/// 2. CityFound, here we have a list of locations to be selected;
+/// 3. CityNotFound, we have a list with null elements, so no city found;
+/// 4. ErrorState, when something is wrong, we generally use this as a life-saver;
 class WeatherBloc extends Bloc<WeatherEvent, WeatherStates> {
   final BaseDomain baseDomain;
 

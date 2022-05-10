@@ -5,6 +5,12 @@ import 'package:weather_challenge/repository/api_exception.dart';
 
 import 'events/search_events.dart';
 
+/// BLoC that handles searching operations.
+/// Possible states:
+/// 1. InitialSearchState;
+/// 2. SuggestionsFound, here we have a list of locations to be selected;
+/// 3. SuggestionsNotFound, we have a list with null elements, so no city found;
+/// 4. ErrorState, when something is wrong, we generally use this as a saver;
 class SearchBloc extends Bloc<SearchEvent, SearchStates> {
   final BaseDomain baseDomain;
 
@@ -38,6 +44,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchStates> {
           emit(SuggestionsNotFound());
         } catch (e) {
           print("SearchBloc: ${e.toString()}");
+          emit(
+            ErrorState(
+              message: e.toString(),
+            ),
+          );
         }
       }),
     );

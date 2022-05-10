@@ -25,11 +25,11 @@ void main() {
         "wind": {
           "speed": 4,
         },
-        "weather": {
-          "0": {
+        "weather": [
+          {
             "description": "sunny",
-          }
-        }
+          },
+        ],
       };
       return Response(jsonEncode(response), 200);
     });

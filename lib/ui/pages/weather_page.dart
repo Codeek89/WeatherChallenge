@@ -37,9 +37,7 @@ class WeatherPage extends StatelessWidget {
                   SizedBox(
                     height: constraints.maxHeight * 0.02,
                   ),
-                  const Divider(
-                    color: Colors.white,
-                  ),
+                  const Divider(),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: ListView.builder(

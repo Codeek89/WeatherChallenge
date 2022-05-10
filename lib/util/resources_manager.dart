@@ -17,6 +17,8 @@ class ResourceManager {
         "https://images.unsplash.com/photo-1523171164821-1122e5b3a1b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
     "snowy":
         "https://images.unsplash.com/photo-1514632595-4944383f2737?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+    "foggy":
+        "https://www.aldautomotive.com.my/Portals/Malaysia/EasyDNNnews/2047/img-foggy-weather-960x.jpg",
   };
 
   static Icon getIconFromDescription(
@@ -29,6 +31,12 @@ class ResourceManager {
         return Icon(
           WeatherIcons.raindrop,
           color: Colors.blueGrey,
+          size: size,
+        );
+      } else if (value.contains('fog')) {
+        return Icon(
+          WeatherIcons.fog,
+          color: Colors.grey,
           size: size,
         );
       } else if (value.contains('snow')) {
@@ -92,6 +100,8 @@ class ResourceManager {
         return _images['cloudy']!;
       } else if (value.contains('storm')) {
         return _images['lightning']!;
+      } else if (value.contains('fog')) {
+        return _images['foggy']!;
       }
       // Image not found
       return "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png";

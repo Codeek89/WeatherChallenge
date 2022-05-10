@@ -43,7 +43,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchStates> {
         } on NoLocationFoundException {
           emit(SuggestionsNotFound());
         } catch (e) {
-          print("SearchBloc: ${e.toString()}");
           emit(
             ErrorState(
               message: e.toString(),

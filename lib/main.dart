@@ -16,35 +16,31 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  try {
-    runApp(
-      MultiBlocProvider(
-        child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider<ThemeNotifier>(
-              create: (_) => ThemeNotifier(),
-              lazy: false,
-            ),
-          ],
-          child: const MyApp(),
-        ),
+  runApp(
+    MultiBlocProvider(
+      child: MultiProvider(
         providers: [
-          BlocProvider(
-            create: (context) => WeatherBloc(
-              baseDomain: Domain(),
-            ),
+          ChangeNotifierProvider<ThemeNotifier>(
+            create: (_) => ThemeNotifier(),
+            lazy: false,
           ),
-          BlocProvider(
-            create: (context) => SearchBloc(
-              baseDomain: Domain(),
-            ),
-          )
         ],
+        child: const MyApp(),
       ),
-    );
-  } catch (e) {
-    print(e.toString());
-  }
+      providers: [
+        BlocProvider(
+          create: (context) => WeatherBloc(
+            baseDomain: Domain(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => SearchBloc(
+            baseDomain: Domain(),
+          ),
+        )
+      ],
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -17,10 +17,8 @@ import 'package:weather_challenge/domain/domain.dart';
 
 import 'package:weather_challenge/main.dart';
 import 'package:weather_challenge/ui/pages/active_search_page.dart';
-import 'package:weather_challenge/ui/pages/search_page.dart';
 import 'package:weather_challenge/ui/widgets/search_bar.dart';
 import 'package:weather_challenge/util/keys.dart';
-import 'package:weather_challenge/util/strings.dart';
 
 class LocalMockDomain extends Mock implements BaseDomain {}
 

@@ -31,5 +31,7 @@ class ErrorState extends SearchStates {
   final String message;
 
   ErrorState({required this.message});
+
+  @override
   List<Object?> get props => [message];
 }

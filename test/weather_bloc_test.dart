@@ -1,10 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:weather_challenge/bloc/events/weather_events.dart';
 import 'package:weather_challenge/bloc/states/weather_states.dart';
 import 'package:weather_challenge/bloc/weather_bloc.dart';
-import 'package:weather_challenge/domain/domain.dart';
 import 'package:weather_challenge/domain/models/city_model.dart';
 
 import 'search_test.mocks.dart';

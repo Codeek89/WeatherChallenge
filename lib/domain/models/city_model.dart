@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:geocoding/geocoding.dart';
 
 /// Base class for city data model.

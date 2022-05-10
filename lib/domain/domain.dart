@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:weather_challenge/domain/models/city_model.dart';
 import 'package:http/http.dart' as http;
@@ -47,7 +46,6 @@ class Domain extends BaseDomain {
           )
           .toList();
     } catch (e) {
-      print(e.toString());
       throw NoLocationFoundException();
     }
   }
@@ -58,7 +56,6 @@ class Domain extends BaseDomain {
       currentSearchedCity =
           await _weatherAPI.getCurrentWeatherOfCity(client, city);
     } catch (e) {
-      print("getWeatherOfCity: ${e.toString()}");
       throw FetchDataException(message: e.toString());
     }
   }
@@ -69,7 +66,6 @@ class Domain extends BaseDomain {
       fiveDaysForecastList =
           await _weatherAPI.get5DaysForecastOfCity(client, city);
     } catch (e) {
-      print("getForecastOfCity: ${e.toString()}");
       throw FetchDataException(message: e.toString());
     }
   }

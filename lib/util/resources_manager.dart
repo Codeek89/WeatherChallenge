@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:weather_challenge/domain/models/city_model.dart';
 import 'package:weather_icons/weather_icons.dart';
 
@@ -76,7 +75,6 @@ class ResourceManager {
         size: size,
       );
     } catch (e) {
-      print(e.toString());
       return Icon(
         Icons.question_mark,
         color: Colors.grey,
@@ -106,7 +104,6 @@ class ResourceManager {
       // Image not found
       return "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png";
     } catch (e) {
-      print(e.toString());
       // Image not found
       return "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png";
     }

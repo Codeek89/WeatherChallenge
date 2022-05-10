@@ -3,13 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_challenge/bloc/events/weather_events.dart';
 import 'package:weather_challenge/bloc/search_bloc.dart';
 import 'package:weather_challenge/bloc/states/search_states.dart'
-    as searchState;
-import 'package:weather_challenge/bloc/states/weather_states.dart'
-    as weatherState;
+    as search_state;
 import 'package:weather_challenge/bloc/weather_bloc.dart';
 import 'package:weather_challenge/domain/models/city_model.dart';
 import 'package:weather_challenge/ui/pages/weather_page.dart';
 import 'package:weather_challenge/ui/widgets/search_bar.dart';
+import 'package:weather_challenge/util/keys.dart';
 
 class ActiveSearchPage extends StatefulWidget {
   const ActiveSearchPage({Key? key}) : super(key: key);
@@ -35,15 +34,17 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
               tag: 'search',
               child: Material(
                 child: CustomSearchBar(
+                  key: const Key(TestingKeys.searchBar),
                   controller: textController,
                 ),
               ),
             ),
-            BlocBuilder<SearchBloc, searchState.SearchStates>(
+            BlocBuilder<SearchBloc, search_state.SearchStates>(
               builder: ((context, state) {
-                if (state is searchState.SuggestionsFound) {
+                if (state is search_state.SuggestionsFound) {
                   final allCities = state.allCitiesSuggestions;
                   return ListView.builder(
+                      key: const Key(TestingKeys.listSuggestions),
                       shrinkWrap: true,
                       itemCount: state.allCitiesSuggestions.length,
                       itemBuilder: (context, index) {
@@ -74,14 +75,14 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
                           ),
                         );
                       });
-                } else if (state is searchState.SuggestionsNotFound) {
+                } else if (state is search_state.SuggestionsNotFound) {
                   return const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       "No location found. Try again please...",
                     ),
                   );
-                } else if (state is searchState.ErrorState) {
+                } else if (state is search_state.ErrorState) {
                   return const Center(
                     child: Text(
                       "No internet connection available. Try connecting to the network...",

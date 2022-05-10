@@ -14,19 +14,20 @@ class SearchBloc extends Bloc<SearchEvent, SearchStates> {
     // Event used to retrieve a list of cities when searching
     on<SearchCityEvent>(
       ((event, emit) async {
-        final domain = baseDomain as Domain;
         try {
-          await domain.getSuggestedCities(event.name).whenComplete(
-            () {
-              if (domain.suggestedCities?.first == null) {
-                emit(SuggestionsNotFound());
-              }
-              final citySuggestions = SuggestionsFound(
-                allCitiesSuggestions: domain.suggestedCities!,
-              );
-              emit(citySuggestions);
-            },
-          );
+          if (baseDomain is Domain) {
+            await baseDomain.getSuggestedCities(event.name).whenComplete(
+              () {
+                if (baseDomain.suggestedCities?.first == null) {
+                  emit(SuggestionsNotFound());
+                }
+                final citySuggestions = SuggestionsFound(
+                  allCitiesSuggestions: baseDomain.suggestedCities!,
+                );
+                emit(citySuggestions);
+              },
+            );
+          }
         } on FetchDataException {
           emit(
             ErrorState(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_challenge/ui/pages/active_search_page.dart';
 import 'package:weather_challenge/ui/widgets/weather_logo_image.dart';
+import 'package:weather_challenge/util/keys.dart';
 import 'package:weather_challenge/util/strings.dart';
 
 class SearchPage extends StatefulWidget {
@@ -22,7 +23,9 @@ class _SearchPageState extends State<SearchPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            const WeatherLogoImage(),
+            const WeatherLogoImage(
+              key: Key(TestingKeys.logoImage),
+            ),
             Text(
               WeatherStrings.titleName,
               style: Theme.of(context).textTheme.headline1,
@@ -33,6 +36,7 @@ class _SearchPageState extends State<SearchPage> {
             Hero(
               tag: 'search',
               child: OutlinedButton(
+                key: const Key(TestingKeys.searchButton),
                 onPressed: () {
                   Navigator.push(
                     context,

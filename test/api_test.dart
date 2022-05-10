@@ -52,7 +52,7 @@ void main() {
     );
   });
 
-  // This is failing due to Geocoding plugin, throwing MissingPluginException
+  /// This is failing due to Geocoding plugin, throwing MissingPluginException
   test('test one call API', () async {
     WidgetsFlutterBinding.ensureInitialized();
     WeatherAPI weatherAPI = WeatherAPI();

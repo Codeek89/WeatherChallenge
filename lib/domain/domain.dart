@@ -8,6 +8,9 @@ import 'package:weather_challenge/repository/weather_api.dart';
 
 // for testing purposes
 abstract class BaseDomain {
+  List<CityModel>? suggestedCities;
+  WeatherCityModel? currentSearchedCity;
+  List<WeatherCityModel>? fiveDaysForecastList;
   Future<void> getSuggestedCities(String name);
   Future<void> getWeatherOfCity(CityModel city);
   Future<void> getForecastOfCity(CityModel city);
@@ -20,9 +23,6 @@ abstract class BaseDomain {
 class Domain extends BaseDomain {
   http.Client client = http.Client();
   final WeatherAPI _weatherAPI = WeatherAPI();
-  List<CityModel>? suggestedCities;
-  WeatherCityModel? currentSearchedCity;
-  List<WeatherCityModel>? fiveDaysForecastList;
 
   // handling all app functionalities
 

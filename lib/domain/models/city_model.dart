@@ -60,7 +60,7 @@ class WeatherCityModel extends CityModel {
       temp: json['main']['temp'].toDouble(),
       humidity: json['main']['humidity'].toDouble(),
       windSpeed: json['wind']['speed'].toDouble(),
-      littleDescription: json['weather']["0"]['description'] ?? '',
+      littleDescription: json['weather'][0]['description'] ?? '',
       time: DateTime.now(),
     );
   }
@@ -78,7 +78,7 @@ class WeatherCityModel extends CityModel {
       humidity: json['daily'][index]['humidity'].toDouble() ?? 0.0,
       windSpeed: json['daily'][index]['wind_speed'].toDouble() ?? 0.0,
       littleDescription:
-          json['daily'][index]['weather']["0"]['description'] ?? '',
+          json['daily'][index]['weather'][0]['description'] ?? '',
       time: DateTime.fromMillisecondsSinceEpoch(
           json['daily'][index]['dt'] * 1000),
     );

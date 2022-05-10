@@ -9,6 +9,7 @@ import 'package:weather_challenge/domain/models/city_model.dart';
 import 'package:weather_challenge/ui/pages/weather_page.dart';
 import 'package:weather_challenge/ui/widgets/search_bar.dart';
 import 'package:weather_challenge/util/keys.dart';
+import 'package:weather_challenge/util/strings.dart';
 
 class ActiveSearchPage extends StatefulWidget {
   const ActiveSearchPage({Key? key}) : super(key: key);
@@ -31,10 +32,12 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Hero(
-              tag: 'search',
+              tag: WeatherStrings.tagSearch,
               child: Material(
                 child: CustomSearchBar(
-                  key: const Key(TestingKeys.searchBar),
+                  key: const Key(
+                    TestingKeys.searchBar,
+                  ),
                   controller: textController,
                 ),
               ),
@@ -50,7 +53,9 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
                       itemBuilder: (context, index) {
                         return Card(
                           child: ListTile(
-                            leading: const Icon(Icons.location_city),
+                            leading: const Icon(
+                              Icons.location_city,
+                            ),
                             title: Text(
                               allCities[index]!.name,
                             ),
@@ -79,13 +84,13 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
                   return const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      "No location found. Try again please...",
+                      WeatherStrings.noLocationFound,
                     ),
                   );
                 } else if (state is search_state.ErrorState) {
-                  return const Center(
+                  return Center(
                     child: Text(
-                      "No internet connection available. Try connecting to the network...",
+                      state.message,
                     ),
                   );
                 } else {

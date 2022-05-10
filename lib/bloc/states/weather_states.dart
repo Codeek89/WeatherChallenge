@@ -22,6 +22,9 @@ class CityFound extends WeatherStates {
     this.currentForecastCityModel,
     this.fiveDaysForecastList,
   });
+
+  @override
+  List<Object?> get props => [currentForecastCityModel, fiveDaysForecastList];
 }
 
 class CityNotFound extends WeatherStates {}

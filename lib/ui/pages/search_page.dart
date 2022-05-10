@@ -34,7 +34,7 @@ class _SearchPageState extends State<SearchPage> {
               height: 20,
             ),
             Hero(
-              tag: 'search',
+              tag: WeatherStrings.tagSearch,
               child: OutlinedButton(
                 key: const Key(TestingKeys.searchButton),
                 onPressed: () {
@@ -59,7 +59,7 @@ class _SearchPageState extends State<SearchPage> {
             const Align(
               alignment: Alignment.bottomCenter,
               child: Text(
-                'Made by Luigi Cuomo',
+                WeatherStrings.madeBy,
               ),
             ),
             const SizedBox(

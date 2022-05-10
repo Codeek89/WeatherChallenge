@@ -30,10 +30,10 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherStates> {
         });
       } on NoLocationFoundException {
         emit(CityNotFound());
-      } on FetchDataException {
+      } on FetchDataException catch (e) {
         emit(
           ErrorState(
-            message: "No Internet Connection",
+            message: e.toString(),
           ),
         );
       } catch (e) {

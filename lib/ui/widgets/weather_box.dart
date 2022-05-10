@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_challenge/domain/models/city_model.dart';
 import 'package:weather_challenge/util/resources_manager.dart';
+import 'package:weather_challenge/util/strings.dart';
 import 'package:weather_icons/weather_icons.dart';
 
 class WeatherBox extends StatelessWidget {
@@ -47,7 +48,7 @@ class WeatherBox extends StatelessWidget {
                       ),
                       Text(
                         model.time!.day == DateTime.now().day
-                            ? "Today"
+                            ? WeatherStrings.today
                             : "${model.time!.day} ${DateFormat.MMMM().format(model.time!)}",
                         style: Theme.of(context).textTheme.bodyText2,
                       )
@@ -55,7 +56,7 @@ class WeatherBox extends StatelessWidget {
                   : [
                       Text(
                         model.time!.day == DateTime.now().day
-                            ? "Today"
+                            ? WeatherStrings.today
                             : "${model.time!.day} ${DateFormat.MMMM().format(model.time!)}",
                         style: Theme.of(context).textTheme.headline3,
                       ),
@@ -101,7 +102,7 @@ class WeatherBox extends StatelessWidget {
                     color: Colors.lightBlue,
                   ),
                   value: model.windSpeed.toStringAsFixed(2),
-                  unit: "km/h",
+                  unit: WeatherStrings.windUnit,
                 ),
                 WeatherValueBox(
                   property: const Icon(
@@ -110,7 +111,7 @@ class WeatherBox extends StatelessWidget {
                     color: Colors.red,
                   ),
                   value: model.temp.toStringAsFixed(1),
-                  unit: "°C",
+                  unit: WeatherStrings.tempUnit,
                 ),
                 WeatherValueBox(
                   property: const Icon(
@@ -119,7 +120,7 @@ class WeatherBox extends StatelessWidget {
                     color: Colors.orange,
                   ),
                   value: model.humidity.round().toString(),
-                  unit: "%",
+                  unit: WeatherStrings.humidityUnit,
                 ),
               ],
             ),
@@ -170,10 +171,6 @@ class WeatherValueBox extends StatelessWidget {
                 fontWeight: FontWeight.w300,
               ),
             )
-            // Text(
-            //   "$value$unit",
-            //   style: Theme.of(context).textTheme.bodyText1,
-            // ),
           ],
         ),
       ),

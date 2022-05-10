@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +8,7 @@ import 'package:weather_challenge/domain/models/city_model.dart';
 import 'package:weather_challenge/repository/api_exception.dart';
 import 'package:weather_challenge/util/api_key.dart';
 
+/// Base class used originally to mock the API later.
 abstract class BaseWeatherAPI {
   Future<WeatherCityModel> getCurrentWeatherOfCity(
       http.Client client, CityModel city);
@@ -21,6 +21,15 @@ abstract class BaseWeatherAPI {
   Future<List<WeatherCityModel>> parse5DaysForecast(String response);
 }
 
+/// Api class used to fetch data for current weather
+/// and forecast for the next 5 days.
+/// It owns two methods for fetching data:
+/// The first one retrieves current weather for a city
+/// provided by latitude and longitude.
+/// The second one retrieves data for forecast.
+///
+/// Both classes parse data into WeatherModelCity class,
+/// using dedicated factory constructors.
 class WeatherAPI extends BaseWeatherAPI {
   final String currentWeatherUrl =
       "https://api.openweathermap.org/data/2.5/weather?";

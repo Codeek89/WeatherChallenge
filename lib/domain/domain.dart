@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:weather_challenge/repository/api_exception.dart';
 import 'package:weather_challenge/repository/weather_api.dart';
 
-// for testing purposes
+/// Initially this was made for testing purposes.
+/// Then Mockito was discovered.
 abstract class BaseDomain {
   List<CityModel>? suggestedCities;
   WeatherCityModel? currentSearchedCity;
@@ -17,8 +18,9 @@ abstract class BaseDomain {
 
 /// Domain class contains all data needed
 /// for the logic of the app. It will:
-/// 1. Fetch suggestions for cities during search operation;
+/// 1. Fetch locations suggestions during search operation;
 /// 2. Receive weather data for city tapped by the user;
+/// 3. Retrieve forecast data for the next five days for that same city;
 class Domain extends BaseDomain {
   http.Client client = http.Client();
   final WeatherAPI _weatherAPI = WeatherAPI();

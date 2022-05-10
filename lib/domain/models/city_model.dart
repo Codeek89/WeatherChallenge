@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:geocoding/geocoding.dart';
 
+/// Base class for city data model.
+/// It owns basically data related to the location.
 class CityModel {
   final String name;
   double? lat;
@@ -28,6 +30,7 @@ class CityModel {
   }
 }
 
+/// A city model that owns also data about weather.
 class WeatherCityModel extends CityModel {
   final double temp;
   final double humidity;

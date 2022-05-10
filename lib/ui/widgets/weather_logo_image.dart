@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Simple widget that shows a Logo image.
 class WeatherLogoImage extends StatelessWidget {
   final double height;
   final double width;

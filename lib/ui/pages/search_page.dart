@@ -6,6 +6,9 @@ import 'package:weather_challenge/util/keys.dart';
 import 'package:weather_challenge/util/strings.dart';
 import 'package:weather_challenge/util/theme.dart';
 
+/// First page shown when loading the app.
+/// You can see a simple logo, a button and
+/// a little text about the author(me).
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 

@@ -7,6 +7,14 @@ import 'package:weather_challenge/ui/widgets/weather_box.dart';
 import 'package:weather_challenge/util/dimensions.dart';
 import 'package:weather_challenge/util/resources_manager.dart';
 
+/// This widget will render everything
+/// weather-related to the city clicked in the previous page.
+///
+/// Temperature, humidity, wind speed.
+///
+/// This page will provide info for the current weather
+/// and for the next 5 days. You can click on each listTile
+/// and get an overview of the forecast of that specific day.
 class WeatherPage extends StatelessWidget {
   final int daysToShow = 5;
 

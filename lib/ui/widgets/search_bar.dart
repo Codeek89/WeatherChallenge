@@ -8,6 +8,8 @@ import 'package:weather_challenge/util/keys.dart';
 
 import '../../util/strings.dart';
 
+/// SearchBar used to search for locations.
+/// It interacts with SearchBloc.
 class CustomSearchBar extends StatefulWidget {
   const CustomSearchBar({Key? key, required this.controller}) : super(key: key);
 

@@ -12,6 +12,15 @@ import 'package:weather_challenge/util/dimensions.dart';
 import 'package:weather_challenge/util/keys.dart';
 import 'package:weather_challenge/util/strings.dart';
 
+/// This page will search locations and give
+/// clickable results in order to be then
+/// shown in the next page.
+///
+/// Here you can enter a name of a city
+/// and get a list of cities corresponding
+/// to the searched one. You have cards with
+/// name, country, eventually streets or other
+/// info.
 class ActiveSearchPage extends StatefulWidget {
   const ActiveSearchPage({Key? key}) : super(key: key);
 

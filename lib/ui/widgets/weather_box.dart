@@ -6,6 +6,7 @@ import 'package:weather_challenge/util/resources_manager.dart';
 import 'package:weather_challenge/util/strings.dart';
 import 'package:weather_icons/weather_icons.dart';
 
+/// Widget used to give an overview of the current weather or forecast.
 class WeatherBox extends StatelessWidget {
   final WeatherCityModel model;
   final bool showName;

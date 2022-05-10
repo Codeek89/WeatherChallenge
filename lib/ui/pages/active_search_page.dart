@@ -8,6 +8,7 @@ import 'package:weather_challenge/bloc/weather_bloc.dart';
 import 'package:weather_challenge/domain/models/city_model.dart';
 import 'package:weather_challenge/ui/pages/weather_page.dart';
 import 'package:weather_challenge/ui/widgets/search_bar.dart';
+import 'package:weather_challenge/util/dimensions.dart';
 import 'package:weather_challenge/util/keys.dart';
 import 'package:weather_challenge/util/strings.dart';
 
@@ -26,7 +27,10 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 60),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.kPaddingFromDeviceHorizontal,
+          vertical: Dimensions.kPaddingFromDeviceVertical,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -49,6 +53,9 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
                   return ListView.builder(
                       key: const Key(TestingKeys.listSuggestions),
                       shrinkWrap: true,
+                      padding: const EdgeInsets.only(
+                        top: Dimensions.kBigPadding,
+                      ),
                       itemCount: state.allCitiesSuggestions.length,
                       itemBuilder: (context, index) {
                         return Card(
@@ -82,7 +89,9 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
                       });
                 } else if (state is search_state.SuggestionsNotFound) {
                   return const Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(
+                      Dimensions.kMiniPadding,
+                    ),
                     child: Text(
                       WeatherStrings.noLocationFound,
                     ),

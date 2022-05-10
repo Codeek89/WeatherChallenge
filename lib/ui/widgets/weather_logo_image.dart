@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-class WeatherLogoImage extends StatefulWidget {
-  const WeatherLogoImage({Key? key}) : super(key: key);
+class WeatherLogoImage extends StatelessWidget {
+  final double height;
+  final double width;
 
-  @override
-  State<WeatherLogoImage> createState() => _WeatherLogoImageState();
-}
+  const WeatherLogoImage({
+    Key? key,
+    required this.height,
+    required this.width,
+  }) : super(key: key);
 
-class _WeatherLogoImageState extends State<WeatherLogoImage> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 100,
-      height: 100,
+      width: width,
+      height: height,
       child: Image.asset(
         "res/images/cloudy.png",
       ),

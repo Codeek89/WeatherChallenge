@@ -16,58 +16,62 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SizedBox(
-        height: double.infinity,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Spacer(),
-            const WeatherLogoImage(
-              key: Key(TestingKeys.logoImage),
-            ),
-            Text(
-              WeatherStrings.titleName,
-              style: Theme.of(context).textTheme.headline1,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Hero(
-              tag: WeatherStrings.tagSearch,
-              child: OutlinedButton(
-                key: const Key(TestingKeys.searchButton),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      transitionDuration: const Duration(seconds: 1),
-                      pageBuilder: (_, __, ___) => const ActiveSearchPage(),
+      body: LayoutBuilder(builder: (context, constraints) {
+        return SizedBox(
+          height: double.infinity,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Spacer(),
+              WeatherLogoImage(
+                key: const Key(TestingKeys.logoImage),
+                height: constraints.maxHeight * 0.12,
+                width: constraints.maxHeight * 0.12,
+              ),
+              Text(
+                WeatherStrings.titleName,
+                style: Theme.of(context).textTheme.headline1,
+              ),
+              SizedBox(
+                height: constraints.maxHeight * 0.02,
+              ),
+              Hero(
+                tag: WeatherStrings.tagSearch,
+                child: OutlinedButton(
+                  key: const Key(TestingKeys.searchButton),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(seconds: 1),
+                        pageBuilder: (_, __, ___) => const ActiveSearchPage(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    WeatherStrings.searchBarHint,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: constraints.maxHeight * 0.025,
                     ),
-                  );
-                },
-                child: const Text(
-                  WeatherStrings.searchBarHint,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
                   ),
                 ),
               ),
-            ),
-            const Spacer(),
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: Text(
-                WeatherStrings.madeBy,
+              const Spacer(),
+              const Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  WeatherStrings.madeBy,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
-      ),
+              SizedBox(
+                height: constraints.maxHeight * 0.02,
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

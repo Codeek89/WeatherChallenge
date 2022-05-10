@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_challenge/bloc/events/search_events.dart';
 import 'package:weather_challenge/bloc/events/weather_events.dart';
 import 'package:weather_challenge/bloc/search_bloc.dart';
 import 'package:weather_challenge/bloc/states/search_states.dart'
@@ -86,6 +87,7 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
                                     lat: allCities[index]!.lat,
                                     lon: allCities[index]!.lon,
                                   )));
+                              context.read<SearchBloc>().add(ResetBloc());
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

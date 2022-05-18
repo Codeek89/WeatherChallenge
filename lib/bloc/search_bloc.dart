@@ -26,11 +26,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchStates> {
               () {
                 if (baseDomain.suggestedCities?.first == null) {
                   emit(SuggestionsNotFound());
+                } else {
+                  final citySuggestions = SuggestionsFound(
+                    allCitiesSuggestions: baseDomain.suggestedCities!,
+                  );
+                  emit(citySuggestions);
                 }
-                final citySuggestions = SuggestionsFound(
-                  allCitiesSuggestions: baseDomain.suggestedCities!,
-                );
-                emit(citySuggestions);
               },
             );
           }
@@ -55,5 +56,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchStates> {
     on<ResetBloc>(
       (event, emit) => emit(InitialSearchState()),
     );
+  }
+
+  @override
+  void onChange(Change<SearchStates> change) {
+    super.onChange(change);
+    print(change);
   }
 }

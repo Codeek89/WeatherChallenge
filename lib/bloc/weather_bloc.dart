@@ -16,7 +16,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherStates> {
   WeatherBloc({
     required this.baseDomain,
   }) : super(InitialWeatherState()) {
-    // Event userd to retrieve city info on current weather and forecast
+    // Event used to retrieve city info on current weather and forecast
     on<EnterCity>((event, emit) async {
       final domain = baseDomain as Domain;
       try {

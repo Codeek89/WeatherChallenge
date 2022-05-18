@@ -37,12 +37,13 @@ class Domain extends BaseDomain {
       suggestedCities = addresses
           .map(
             (loc) => CityModel(
-                name: loc.locality!.isEmpty ? loc.name! : loc.locality!,
-                country: loc.country ?? '',
-                locality: loc.locality ?? '',
-                street: loc.street ?? '',
-                lat: locations.first.latitude,
-                lon: locations.first.longitude),
+              name: loc.locality!.isEmpty ? loc.name! : loc.locality!,
+              country: loc.country ?? '',
+              locality: loc.locality ?? '',
+              street: loc.street ?? '',
+              lat: locations.first.latitude,
+              lon: locations.first.longitude,
+            ),
           )
           .toList();
     } catch (e) {

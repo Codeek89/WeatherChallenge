@@ -24,7 +24,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchStates> {
           if (baseDomain is Domain) {
             await baseDomain.getSuggestedCities(event.name).whenComplete(
               () {
-                print(baseDomain.suggestedCities);
                 if (baseDomain.suggestedCities?.first == null) {
                   emit(SuggestionsNotFound());
                 } else {

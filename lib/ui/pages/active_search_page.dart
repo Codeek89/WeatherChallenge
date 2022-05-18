@@ -90,8 +90,10 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
                               context.read<SearchBloc>().add(ResetBloc());
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder: ((context) => const WeatherPage()),
+                                RouteWrapper(
+                                  pageBuilder: ((context, animation,
+                                          secondaryAnimation) =>
+                                      const WeatherPage()),
                                 ),
                               );
                             },
@@ -123,4 +125,26 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
       ),
     );
   }
+}
+
+class RouteWrapper extends PageRouteBuilder {
+  RouteWrapper({required RoutePageBuilder pageBuilder})
+      : super(pageBuilder: pageBuilder);
+
+  @override
+  Duration get transitionDuration => const Duration(
+        milliseconds: 200,
+      );
+
+  @override
+  RouteTransitionsBuilder get transitionsBuilder =>
+      (context, animation, secAnimation, child) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(1, 0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: const WeatherPage(),
+        );
+      };
 }

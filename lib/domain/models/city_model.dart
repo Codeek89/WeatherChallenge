@@ -98,5 +98,6 @@ class WeatherCityModel extends CityModel {
   }
 
   @override
+  // ignore: unnecessary_overrides
   int get hashCode => super.hashCode;
 }

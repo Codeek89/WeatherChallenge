@@ -24,13 +24,15 @@ class SearchBloc extends Bloc<SearchEvent, SearchStates> {
           if (baseDomain is Domain) {
             await baseDomain.getSuggestedCities(event.name).whenComplete(
               () {
+                print(baseDomain.suggestedCities);
                 if (baseDomain.suggestedCities?.first == null) {
                   emit(SuggestionsNotFound());
+                } else {
+                  final citySuggestions = SuggestionsFound(
+                    allCitiesSuggestions: baseDomain.suggestedCities!,
+                  );
+                  emit(citySuggestions);
                 }
-                final citySuggestions = SuggestionsFound(
-                  allCitiesSuggestions: baseDomain.suggestedCities!,
-                );
-                emit(citySuggestions);
               },
             );
           }
@@ -55,5 +57,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchStates> {
     on<ResetBloc>(
       (event, emit) => emit(InitialSearchState()),
     );
+  }
+
+  @override
+  void onChange(Change<SearchStates> change) {
+    super.onChange(change);
+    print(change);
   }
 }

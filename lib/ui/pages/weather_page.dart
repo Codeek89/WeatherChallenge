@@ -39,7 +39,7 @@ class WeatherPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: WeatherBox(
-                      model: state.currentForecastCityModel!,
+                      cityModel: state.currentForecastCityModel!,
                     ),
                   ),
                   SizedBox(
@@ -70,8 +70,7 @@ class WeatherPage extends StatelessWidget {
                                     height: constraints.maxHeight * 0.45,
                                     width: constraints.maxWidth,
                                     child: WeatherBox(
-                                      model: allFiveDays[index]!,
-                                      showName: false,
+                                      cityModel: allFiveDays[index]!,
                                     ),
                                   ),
                                 );

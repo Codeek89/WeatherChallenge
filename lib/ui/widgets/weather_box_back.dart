@@ -31,27 +31,66 @@ class WeatherBoxBack extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const Spacer(),
               Text(
                 "Date: ${model.time!.day} ${DateFormat.MMMM().format(model.time!)}, ${DateFormat('EEEE').format(
                   model.time!,
                 )}",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              const SizedBox(
+                height: Dimensions.kSmallDistanceBetweenWidgets,
               ),
               Text(
-                "Max Temp: ${model.time!.day} ${DateFormat.MMMM().format(model.time!)}, ${DateFormat('EEEE').format(
-                  model.time!,
-                )}",
+                "Max Temp: ${model.maxTemp} C",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              const SizedBox(
+                height: Dimensions.kSmallDistanceBetweenWidgets,
               ),
               Text(
-                "Min Temp: ${model.time!.day} ${DateFormat.MMMM().format(model.time!)}, ${DateFormat('EEEE').format(
-                  model.time!,
-                )}",
+                "Min Temp: ${model.minTemp} C",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              const SizedBox(
+                height: Dimensions.kSmallDistanceBetweenWidgets,
               ),
               Text(
-                "Pressure: ${model.time!.day} ${DateFormat.MMMM().format(model.time!)}, ${DateFormat('EEEE').format(
-                  model.time!,
-                )}",
+                "Pressure: ${model.pressure}",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              const SizedBox(
+                height: Dimensions.kSmallDistanceBetweenWidgets,
+              ),
+              Text(
+                "Clouds: ${model.cloudsPercentage}%",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              const SizedBox(
+                height: Dimensions.kSmallDistanceBetweenWidgets,
+              ),
+              if (model.rainVolume != null)
+                Text(
+                  "Rain volume: ${model.rainVolume} mm",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              const SizedBox(
+                height: Dimensions.kSmallDistanceBetweenWidgets,
+              ),
+              if (model.snowVolume != null)
+                Text(
+                  "Snow volume: ${model.snowVolume} mm",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              const Spacer(),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: TextButton(
+                  child: const Text("View location on Maps"),
+                  onPressed: () {},
+                ),
               ),
             ],
           ),

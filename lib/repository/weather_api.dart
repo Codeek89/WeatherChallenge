@@ -52,6 +52,7 @@ class WeatherAPI extends BaseWeatherAPI {
     } on SocketException {
       throw FetchDataException(message: 'No Internet connection');
     } catch (e) {
+      print(e.toString());
       throw FetchDataException(
         message: 'Error while fetching data for current weather from server.',
       );
@@ -88,6 +89,7 @@ class WeatherAPI extends BaseWeatherAPI {
 
       return parsed;
     } catch (e) {
+      print(e.toString());
       throw FetchDataException(
           message: "Error while parsing data current weather.");
     }

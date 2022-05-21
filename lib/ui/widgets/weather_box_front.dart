@@ -25,7 +25,9 @@ class WeatherBoxFront extends StatelessWidget {
         Opacity(
           opacity: 0.3,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: BorderRadius.circular(
+              Dimensions.kSmallPadding,
+            ),
             child: Image.network(
               ResourceManager.getImageFromDescription(
                 model,

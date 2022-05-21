@@ -8,6 +8,7 @@ import 'package:weather_challenge/util/strings.dart';
 import 'package:weather_icons/weather_icons.dart';
 
 /// Back of WeatherBox, it gives additional weather info
+/// Date - Max temp - Min temp - Pressure - Cloud? - Rain? - Snow?
 class WeatherBoxBack extends StatelessWidget {
   final WeatherCityModel model;
   final bool showName;
@@ -19,107 +20,43 @@ class WeatherBoxBack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            top: Dimensions.kSmallPadding,
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
+        elevation: 0,
+        child: Padding(
+          padding: const EdgeInsets.all(
+            Dimensions.kMediumPadding,
           ),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: showName
-                  ? [
-                      Text(
-                        model.name,
-                        style: Theme.of(context).textTheme.headline3,
-                      ),
-                      Text(
-                        model.time!.day == DateTime.now().day
-                            ? WeatherStrings.today
-                            : "${model.time!.day} ${DateFormat.MMMM().format(model.time!)}",
-                        style: Theme.of(context).textTheme.bodyText2,
-                      )
-                    ]
-                  : [
-                      Text(
-                        model.time!.day == DateTime.now().day
-                            ? WeatherStrings.today
-                            : "${model.time!.day} ${DateFormat.MMMM().format(model.time!)}",
-                        style: Theme.of(context).textTheme.headline3,
-                      ),
-                    ],
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: Padding(
-            padding: const EdgeInsets.all(
-              Dimensions.kMiniPadding,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ResourceManager.getIconFromDescription(
-                  model,
-                  size: Dimensions.currentWeatherIcon,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.025,
-                ),
-                Text(
-                  model.littleDescription,
-                ),
-              ],
-            ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(
+                "Date: ${model.time!.day} ${DateFormat.MMMM().format(model.time!)}, ${DateFormat('EEEE').format(
+                  model.time!,
+                )}",
+              ),
+              Text(
+                "Max Temp: ${model.time!.day} ${DateFormat.MMMM().format(model.time!)}, ${DateFormat('EEEE').format(
+                  model.time!,
+                )}",
+              ),
+              Text(
+                "Min Temp: ${model.time!.day} ${DateFormat.MMMM().format(model.time!)}, ${DateFormat('EEEE').format(
+                  model.time!,
+                )}",
+              ),
+              Text(
+                "Pressure: ${model.time!.day} ${DateFormat.MMMM().format(model.time!)}, ${DateFormat('EEEE').format(
+                  model.time!,
+                )}",
+              ),
+            ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: Dimensions.kMiniPadding,
-          ),
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                WeatherValueBox(
-                  property: const Icon(
-                    WeatherIcons.windy,
-                    size: Dimensions.weatherIcon,
-                    color: Colors.lightBlue,
-                  ),
-                  value: model.windSpeed.toStringAsFixed(2),
-                  unit: WeatherStrings.windUnit,
-                ),
-                WeatherValueBox(
-                  property: const Icon(
-                    WeatherIcons.thermometer,
-                    size: Dimensions.weatherIcon,
-                    color: Colors.red,
-                  ),
-                  value: model.temp.toStringAsFixed(1),
-                  unit: WeatherStrings.tempUnit,
-                ),
-                WeatherValueBox(
-                  property: const Icon(
-                    WeatherIcons.humidity,
-                    size: Dimensions.weatherIcon,
-                    color: Colors.orange,
-                  ),
-                  value: model.humidity.round().toString(),
-                  unit: WeatherStrings.humidityUnit,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

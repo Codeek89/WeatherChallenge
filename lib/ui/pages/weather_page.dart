@@ -65,6 +65,7 @@ class WeatherPage extends StatelessWidget {
                                       Dimensions.circularBorder,
                                     ),
                                   ),
+                                  insetAnimationCurve: Curves.bounceIn,
                                   elevation: Dimensions.dialogElevation,
                                   child: SizedBox(
                                     height: constraints.maxHeight * 0.45,

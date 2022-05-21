@@ -35,7 +35,13 @@ class WeatherCityModel extends CityModel {
   final double humidity;
   final double windSpeed;
   final String littleDescription;
-  DateTime? time;
+  final double minTemp;
+  final double maxTemp;
+  final double pressure;
+  final double cloudsPercentage;
+  final double? rainVolume;
+  final double? snowVolume;
+  final DateTime? time;
 
   WeatherCityModel({
     required name,
@@ -46,6 +52,12 @@ class WeatherCityModel extends CityModel {
     required this.humidity,
     required this.windSpeed,
     required this.littleDescription,
+    required this.minTemp,
+    required this.maxTemp,
+    required this.pressure,
+    required this.cloudsPercentage,
+    this.rainVolume,
+    this.snowVolume,
     this.time,
   }) : super(
             name: name,
@@ -63,6 +75,12 @@ class WeatherCityModel extends CityModel {
       humidity: json['main']['humidity'].toDouble(),
       windSpeed: json['wind']['speed'].toDouble(),
       littleDescription: json['weather'][0]['description'] ?? '',
+      minTemp: json['main']['temp_min'].toDouble(),
+      maxTemp: json['main']['temp_max'].toDouble(),
+      pressure: json['main']['pressure'].toDouble(),
+      cloudsPercentage: json['clouds']['all'].toDouble(),
+      rainVolume: json['rain']?.toDouble(),
+      snowVolume: json['snow']?.toDouble(),
       time: DateTime.now(),
     );
   }
@@ -81,6 +99,12 @@ class WeatherCityModel extends CityModel {
       windSpeed: json['daily'][index]['wind_speed'].toDouble() ?? 0.0,
       littleDescription:
           json['daily'][index]['weather'][0]['description'] ?? '',
+      minTemp: json['daily'][index]['temp']['min'].toDouble(),
+      maxTemp: json['daily'][index]['temp']['max'].toDouble(),
+      pressure: json['daily'][index]['pressure'].toDouble(),
+      cloudsPercentage: json['daily'][index]['clouds']?.toDouble(),
+      rainVolume: json['daily'][index]['rain']?.toDouble(),
+      snowVolume: json['daily'][index]['snow']?.toDouble(),
       time: DateTime.fromMillisecondsSinceEpoch(
           json['daily'][index]['dt'] * 1000),
     );

@@ -14,7 +14,7 @@ class ThemeNotifier with ChangeNotifier {
 
   final _darkTheme = ThemeData(
     colorScheme: const ColorScheme(
-      primary: Colors.black54,
+      primary: Colors.orange,
       secondary: Colors.amber,
       background: Colors.black,
       brightness: Brightness.dark,

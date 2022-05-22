@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:maps_launcher/maps_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:weather_challenge/domain/models/city_model.dart';
 import 'package:weather_challenge/ui/widgets/weather_value_box.dart';
 import 'package:weather_challenge/util/dimensions.dart';
@@ -89,7 +92,11 @@ class WeatherBoxBack extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: TextButton(
                   child: const Text("View location on Maps"),
-                  onPressed: () {},
+                  onPressed: () async {
+                    final lat = model.lat!;
+                    final lon = model.lon!;
+                    MapsLauncher.launchCoordinates(lat, lon);
+                  },
                 ),
               ),
             ],

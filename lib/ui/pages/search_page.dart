@@ -5,6 +5,7 @@ import 'package:weather_challenge/ui/widgets/weather_logo_image.dart';
 import 'package:weather_challenge/util/keys.dart';
 import 'package:weather_challenge/util/strings.dart';
 import 'package:weather_challenge/util/theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// First page shown when loading the app.
 /// You can see a simple logo, a button and
@@ -55,7 +56,7 @@ class _SearchPageState extends State<SearchPage> {
               width: constraints.maxHeight * 0.12,
             ),
             Text(
-              WeatherStrings.titleName,
+              AppLocalizations.of(context)!.appTitle,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             SizedBox(
@@ -77,7 +78,7 @@ class _SearchPageState extends State<SearchPage> {
                   );
                 },
                 child: Text(
-                  WeatherStrings.searchBarHint,
+                  AppLocalizations.of(context)!.searchForCity,
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1!
@@ -89,10 +90,10 @@ class _SearchPageState extends State<SearchPage> {
               height: constraints.maxHeight * 0.1,
             ),
             const Spacer(),
-            const Align(
+            Align(
               alignment: Alignment.bottomCenter,
               child: Text(
-                WeatherStrings.madeBy,
+                '${AppLocalizations.of(context)!.madeBy} Luigi Cuomo',
               ),
             ),
             SizedBox(

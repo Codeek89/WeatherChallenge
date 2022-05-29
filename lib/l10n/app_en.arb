@@ -1,0 +1,8 @@
+{
+    "appTitle": "Weather Challenge",
+    "searchForCity": "Search for a city...",
+    "madeBy": "Made by",
+    "today": "Today",
+    "noConnectionFound": "No internet connection available. Try connecting to the network...",
+    "noLocationFound": "No location found. Try again please..."
+}

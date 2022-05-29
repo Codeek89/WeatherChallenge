@@ -6,6 +6,7 @@ import 'package:weather_challenge/util/dimensions.dart';
 import 'package:weather_challenge/util/resources_manager.dart';
 import 'package:weather_challenge/util/strings.dart';
 import 'package:weather_icons/weather_icons.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Widget used to give an overview of the current weather or forecast.
 class WeatherBoxFront extends StatefulWidget {
@@ -72,7 +73,7 @@ class _WeatherBoxFrontState extends State<WeatherBoxFront> {
                       ),
                       Text(
                         widget.model.time!.day == DateTime.now().day
-                            ? WeatherStrings.today
+                            ? AppLocalizations.of(context)!.today
                             : "${widget.model.time!.day} ${DateFormat.MMMM().format(widget.model.time!)}",
                         style: Theme.of(context).textTheme.bodyText2,
                       )
@@ -80,7 +81,7 @@ class _WeatherBoxFrontState extends State<WeatherBoxFront> {
                   : [
                       Text(
                         widget.model.time!.day == DateTime.now().day
-                            ? WeatherStrings.today
+                            ? AppLocalizations.of(context)!.today
                             : "${widget.model.time!.day} ${DateFormat.MMMM().format(widget.model.time!)}",
                         style: Theme.of(context).textTheme.headline3,
                       ),

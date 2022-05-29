@@ -8,6 +8,8 @@ import 'package:weather_challenge/domain/domain.dart';
 import 'package:weather_challenge/ui/pages/search_page.dart';
 import 'package:weather_challenge/util/strings.dart';
 import 'package:weather_challenge/util/theme.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +53,13 @@ class MyApp extends StatelessWidget {
     return Consumer<ThemeNotifier>(builder: (context, theme, _) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: WeatherStrings.titleName,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: AppLocalizations.supportedLocales,
+        onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
         theme: theme.currentTheme,
         themeMode: theme.isDarkMode ? ThemeMode.dark : ThemeMode.light,
         home: const SearchPage(),

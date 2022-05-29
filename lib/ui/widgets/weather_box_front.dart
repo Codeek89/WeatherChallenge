@@ -8,7 +8,7 @@ import 'package:weather_challenge/util/strings.dart';
 import 'package:weather_icons/weather_icons.dart';
 
 /// Widget used to give an overview of the current weather or forecast.
-class WeatherBoxFront extends StatelessWidget {
+class WeatherBoxFront extends StatefulWidget {
   final WeatherCityModel model;
   final bool showName;
   const WeatherBoxFront({
@@ -16,6 +16,30 @@ class WeatherBoxFront extends StatelessWidget {
     this.showName = true,
     required this.model,
   }) : super(key: key);
+
+  @override
+  State<WeatherBoxFront> createState() => _WeatherBoxFrontState();
+}
+
+class _WeatherBoxFrontState extends State<WeatherBoxFront> {
+  late Image backgroundImage;
+
+  @override
+  void initState() {
+    backgroundImage = Image.network(
+      ResourceManager.getImageFromDescription(
+        widget.model,
+      ),
+      fit: BoxFit.fill,
+    );
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    precacheImage(backgroundImage.image, context);
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +52,7 @@ class WeatherBoxFront extends StatelessWidget {
             borderRadius: BorderRadius.circular(
               Dimensions.kSmallPadding,
             ),
-            child: Image.network(
-              ResourceManager.getImageFromDescription(
-                model,
-              ),
-              fit: BoxFit.fill,
-            ),
+            child: backgroundImage,
           ),
         ),
         Padding(
@@ -45,24 +64,24 @@ class WeatherBoxFront extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: showName
+              children: widget.showName
                   ? [
                       Text(
-                        model.name,
+                        widget.model.name,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                       Text(
-                        model.time!.day == DateTime.now().day
+                        widget.model.time!.day == DateTime.now().day
                             ? WeatherStrings.today
-                            : "${model.time!.day} ${DateFormat.MMMM().format(model.time!)}",
+                            : "${widget.model.time!.day} ${DateFormat.MMMM().format(widget.model.time!)}",
                         style: Theme.of(context).textTheme.bodyText2,
                       )
                     ]
                   : [
                       Text(
-                        model.time!.day == DateTime.now().day
+                        widget.model.time!.day == DateTime.now().day
                             ? WeatherStrings.today
-                            : "${model.time!.day} ${DateFormat.MMMM().format(model.time!)}",
+                            : "${widget.model.time!.day} ${DateFormat.MMMM().format(widget.model.time!)}",
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ],
@@ -79,14 +98,14 @@ class WeatherBoxFront extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 ResourceManager.getIconFromDescription(
-                  model,
+                  widget.model,
                   size: Dimensions.currentWeatherIcon,
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.025,
                 ),
                 Text(
-                  model.littleDescription,
+                  widget.model.littleDescription,
                 ),
               ],
             ),
@@ -108,7 +127,7 @@ class WeatherBoxFront extends StatelessWidget {
                     size: Dimensions.weatherIcon,
                     color: Colors.lightBlue,
                   ),
-                  value: model.windSpeed.toStringAsFixed(2),
+                  value: widget.model.windSpeed.toStringAsFixed(2),
                   unit: WeatherStrings.windUnit,
                 ),
                 WeatherValueBox(
@@ -117,7 +136,7 @@ class WeatherBoxFront extends StatelessWidget {
                     size: Dimensions.weatherIcon,
                     color: Colors.red,
                   ),
-                  value: model.temp.toStringAsFixed(1),
+                  value: widget.model.temp.toStringAsFixed(1),
                   unit: WeatherStrings.tempUnit,
                 ),
                 WeatherValueBox(
@@ -126,7 +145,7 @@ class WeatherBoxFront extends StatelessWidget {
                     size: Dimensions.weatherIcon,
                     color: Colors.orange,
                   ),
-                  value: model.humidity.round().toString(),
+                  value: widget.model.humidity.round().toString(),
                   unit: WeatherStrings.humidityUnit,
                 ),
               ],

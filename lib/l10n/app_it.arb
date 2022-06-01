@@ -2,5 +2,7 @@
     "appTitle": "Weather Challenge",
     "searchForCity": "Cerca una città...",
     "madeBy": "A cura di",
-    "today": "Oggi"
+    "today": "Oggi",
+    "noConnectionFound": "Nessuna connessione ad internet trovata. Prova a collegarti ad una rete...",
+    "noLocationFound": "Nessun luogo trovato. Prova di nuovo..."
 }

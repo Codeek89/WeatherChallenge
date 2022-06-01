@@ -48,6 +48,10 @@ void main() {
         humidity: 50,
         windSpeed: 4,
         littleDescription: "sunny",
+        cloudsPercentage: 15.0,
+        maxTemp: 25.0,
+        minTemp: 20.0,
+        pressure: 1000,
       ),
     );
   });
@@ -145,6 +149,10 @@ void main() {
         humidity: 50.0,
         windSpeed: 5,
         littleDescription: "sunny",
+        cloudsPercentage: 1.0,
+        maxTemp: 30.0,
+        minTemp: 25.0,
+        pressure: 1000,
       ),
     );
   });

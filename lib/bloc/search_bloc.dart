@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_challenge/bloc/states/search_states.dart';
 import 'package:weather_challenge/domain/domain.dart';
 import 'package:weather_challenge/repository/api_exception.dart';
+import 'package:weather_challenge/util/strings.dart';
 
 import 'events/search_events.dart';
 
@@ -38,7 +39,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchStates> {
         } on FetchDataException {
           emit(
             ErrorState(
-              message: "No Internet connection",
+              message: WeatherStrings.noConnectionFound,
             ),
           );
         } on NoLocationFoundException {

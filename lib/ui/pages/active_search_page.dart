@@ -13,6 +13,8 @@ import 'package:weather_challenge/util/dimensions.dart';
 import 'package:weather_challenge/util/keys.dart';
 import 'package:weather_challenge/util/strings.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 /// This page will search locations and give
 /// clickable results in order to be then
 /// shown in the next page.
@@ -101,12 +103,12 @@ class _ActiveSearchPageState extends State<ActiveSearchPage> {
                         );
                       });
                 } else if (state is search_state.SuggestionsNotFound) {
-                  return const Padding(
-                    padding: EdgeInsets.all(
+                  return Padding(
+                    padding: const EdgeInsets.all(
                       Dimensions.kMiniPadding,
                     ),
                     child: Text(
-                      WeatherStrings.noLocationFound,
+                      AppLocalizations.of(context)!.noLocationFound,
                     ),
                   );
                 } else if (state is search_state.ErrorState) {
